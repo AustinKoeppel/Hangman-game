@@ -36,18 +36,35 @@ var car = {
     }
 };
 
-var words = ["Zoidberg","Fry","bender","leela"];
+var words = ["Zoidberg","Fry","Bender","Leela"];
 var word = "";
 var score = 0;
 var wrongGuesses = 0;
+var rightGuess = 0;
 var letterArray = [];
 
 function pickWord()
 {
-    word = words[Math.floor(Math.random()*3)]
+    letterArray = [];
+    if(words.length > 0){
+    //console.log(words);
+    word = words[Math.floor(Math.random()*(words.length-1))]
+    words.splice(words.indexOf(word),1);
+    //console.log(words);
     wrongGuesses = word.length;
+    rightGuess = 0;
+    var clear = "";
+    for(var i = 0; i < word.length; i++)
+    {
+        clear = clear + "_";
+    }
+    document.getElementById("dashes").innerHTML = clear;
     console.log(wrongGuesses);
     console.log(word);
+    }
+    else {
+        alert("YOU WIN");
+    }
 }
 
 function addElement () { 
@@ -66,18 +83,26 @@ function addElement () {
     newDiv.setAttribute("id", "dashes")
     // add the newly created element and its content into the DOM 
     var currentDiv = document.getElementById("div1"); 
-    document.body.insertBefore(newDiv, currentDiv); 
+    document.body.insertBefore(newDiv, currentDiv);
 }
 
 function reset()
 {
     pickWord();
-    var clear = "";
-    for(var i = 0; i < word.length; i++)
-    {
-        clear = clear + "_";
-    }
-    document.getElementById("dashes").innerHTML = clear;
+    score = 0;
+    rightGuess = 0;
+    setScore();
+    setGuesses();
+}
+
+function setScore()
+{
+    document.getElementById("score").innerHTML = "Score: " + score;
+}
+
+function setGuesses()
+{
+    document.getElementById("guesses").innerHTML = "Remaining Guesses: " + wrongGuesses;
 }
 
 function showInstances(x)
@@ -87,14 +112,12 @@ function showInstances(x)
     
     for(var i = 0; i < word.length; i++)
     {
-        if(word.charAt(i) == x)
+        if(word.charAt(i).toLowerCase() == x)
         {
-            console.log("dashesInner" + dashesInner);
+            rightGuess++;
             var firstSlice = dashesInner.slice(0,i);
-            console.log("First slice:" + firstSlice);
             var secondSlice = dashesInner.slice(i+1,word.length);
-            console.log("Second slice:" +secondSlice);
-            dashesInner = dashesInner.slice(0,i) + x + dashesInner.slice(i+1,word.length);
+            dashesInner = dashesInner.slice(0,i) + word.charAt(i) + dashesInner.slice(i+1,word.length);
         }
     }
     console.log(dashesInner);
@@ -103,31 +126,39 @@ function showInstances(x)
 
 window.onload = function()
 {
-    pickWord();
-    addElement();
+    reset();
 }
 
 document.onkeyup = function(x)
 {
-    var keyPressed = x.key;
+    var keyPressed = x.key.toLowerCase();
     
     if(letterArray.includes(keyPressed))
     {
         //Do nothing?
     }
-    else if(word.includes(keyPressed))
+    else if(word.toLowerCase().includes(keyPressed))
     {
         showInstances(keyPressed);
-
+        letterArray.push(keyPressed);
     }
     else
     {
         wrongGuesses--;
+        setGuesses();
+        letterArray.push(keyPressed);
     }
     if(wrongGuesses <= 0)
     {
         alert("GAME OVER!");
         reset();
     }
-    letterArray.push(keyPressed);
+    else if(rightGuess >= word.length)
+    {
+        score++;
+        setScore();
+        pickWord();
+        setGuesses();
+    }
+    
 }
