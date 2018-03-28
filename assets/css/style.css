@@ -61,16 +61,17 @@ header{
 }
 #space{
     float: left;
+    overflow: auto;
     display: none;
     z-index:99;
     background-color: white;
     position: relative;
-    width: 28%;
-    height: 20%;
+    min-width: 28%;
+    min-height: 20%;
     margin: auto 36%;
     border:black solid 2px;
     text-align: center;
     font-size: 30px;
-    line-height: 380%;
+    line-height: 50px;
     box-shadow: 5px 10px #888888;
 }

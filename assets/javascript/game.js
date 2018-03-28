@@ -5,30 +5,33 @@ var wrongGuesses = 0;
 var rightGuess = 0;
 var letterArray = [];
 var pause = false;
+var block = false;
 
 function pickWord()
 {
     letterArray = [];
     pause = false;
     document.getElementById("space").style.display = "none";
-    if(words.length > 0){
-    //console.log(words);
-    word = words[Math.floor(Math.random()*(words.length-1))]
-    words.splice(words.indexOf(word),1);
-    //console.log(words);
-    wrongGuesses = word.length;
-    rightGuess = 0;
-    var clear = "";
-    for(var i = 0; i < word.length; i++)
+    if(words.length > 0)
     {
-        clear = clear + "_";
+        //console.log(words);
+        word = words[Math.floor(Math.random()*(words.length-1))]
+        words.splice(words.indexOf(word),1);
+        //console.log(words);
+        wrongGuesses = word.length;
+        rightGuess = 0;
+        var clear = "";
+        for(var i = 0; i < word.length; i++)
+        {
+            clear = clear + "_";
+        }
+        document.getElementById("dashes").innerHTML = clear;
+        console.log(wrongGuesses);
+        console.log(word);
     }
-    document.getElementById("dashes").innerHTML = clear;
-    console.log(wrongGuesses);
-    console.log(word);
-    }
-    else {
-        alert("YOU WIN");
+    else
+    {
+        block = true;
     }
 }
 
@@ -119,44 +122,63 @@ window.onload = function()
 document.onkeyup = function(x)
 {
     var keyPressed = x.key.toLowerCase();
-    if(pause)
+    if(block)
     {
-        pickWord();
-        setGuesses();
-        clearLetters();   
+        document.getElementById("space").textContent = "GAME OVER YOU'VE WON";
+        document.getElementById("space").style.display = "block";
     }
-    else
-    {
-        if(letterArray.includes(keyPressed)
-            || x.keyCode < 65
-                || x.keyCode > 90)
+    else{
+            
+        if(pause)
         {
-            //Do nothing?
-        }
-        else if(word.toLowerCase().includes(keyPressed))
-        {
-            showInstances(keyPressed);
-            updateLetters(keyPressed);
-            letterArray.push(keyPressed);
+            if(wrongGuesses >= 0 && words.length > 0)
+            {
+                document.getElementById("space").textContent = "Press Any Key To Keep Playing!";
+                reset();
+            }
+            else
+            {
+                pickWord();
+                setGuesses();
+                clearLetters();   
+            }
         }
         else
         {
-            wrongGuesses--;
-            setGuesses();
-            updateLetters(keyPressed);
-            letterArray.push(keyPressed);
-        }
-        if(wrongGuesses <= 0)
-        {
-            alert("GAME OVER!\n ANSWER WAS" + word);
-            reset();
-        }
-        else if(rightGuess >= word.length)
-        {
-            score++;
-            pause=true;
-            setScore();
-            document.getElementById("space").style.display = "block";
+            if(letterArray.includes(keyPressed)
+                || x.keyCode < 65
+                    || x.keyCode > 90)
+            {
+                //Do nothing?
+            }
+            else if(word.toLowerCase().includes(keyPressed))
+            {
+                showInstances(keyPressed);
+                updateLetters(keyPressed);
+                letterArray.push(keyPressed);
+            }
+            else
+            {
+                wrongGuesses--;
+                setGuesses();
+                updateLetters(keyPressed);
+                letterArray.push(keyPressed);
+            }
+            if(wrongGuesses <= 0)
+            {
+                document.getElementById("space").textContent = "GAME OVER!\nANSWER WAS: " + word + "\nPress any key to keep playing";
+                document.getElementById("space").style.lineHeight = "50px";
+                document.getElementById("space").style.display = "block";
+                words = ["Zoidberg","Fry","Bender","Leela"];
+                pause=true;
+            }
+            else if(rightGuess >= word.length)
+            {
+                score++;
+                pause=true;
+                setScore();
+                document.getElementById("space").style.display = "block";
+            }
         }
     }
 }
