@@ -131,15 +131,17 @@ document.onkeyup = function(x)
             
         if(pause)
         {
-            if(wrongGuesses >= 0 && words.length > 0)
+            if(wrongGuesses <= 0 && words.length > 0)
             {
                 document.getElementById("space").textContent = "Press Any Key To Keep Playing!";
+                setScore();
                 reset();
             }
             else
             {
                 pickWord();
                 setGuesses();
+                setScore();
                 clearLetters();   
             }
         }
