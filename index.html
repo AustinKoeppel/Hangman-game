@@ -5,14 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/reset.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="./assets/css/style.css" />
     <script src="./assets/javascript/game.js"></script>
 </head>
 <body>
-    <div id="div1">
-        <p id="dashes" style="letter-spacing: 5px;"></p>
-        <p id="score">Score: 0</p>
-        <p id="guesses">Remaining Guesses: 0</p>
+    <header>
+        <img src="./assets/images/1200px-Futurama_1999_logo.svg.png" alt="futurama logo" class="img">
+        <div class="hang">
+            <h1>Hangman</h1>
+        </div>
+        <div class="dash-wrapper">
+            <p id="dashes" style="letter-spacing: 5px;"></p>
+        </div>
+    </header>
+    <div id="space">Press Any Key To Keep Playing!</div>
+    <div id="div1"> 
+        <p id="score" class="label">Score: 0</p>
+        <p id="guesses" class="label">Remaining Guesses: 0</p>
+        <p class="label">Letters Guessed:</p>
+        <div id="letters"></div>
     </div>
 </body>
 </html>

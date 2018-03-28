@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css?family=Share+Tech');
+
+@font-face {
+    font-family: DeliciousRoman;
+    src: url(../fr-fal1.ttf);
+}
+
+h1{
+    font-family: DeliciousRoman;
+    font-size: 8.5vw;
+}
+html{
+    height: 100%;
+    font-family: 'Share Tech', sans-serif;
+}
+body{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-image: url("../images/6822017-futurama-wallpaper.jpg");
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: center;
+}
+header{
+    text-align: center;
+}
+.img{
+    width: 70%;
+    margin: auto 15%;
+    position: relative;
+}
+.hang{
+    z-index: 1;
+    position: relative;
+    bottom: 8.2vw;
+}
+.label{
+    line-height: 22px;
+    font-size: 18px;
+}
+#div1
+{
+    margin:10% 35% 0%;
+    width: 30%;
+    z-index: 0;
+    float: left;
+    position: absolute;
+}
+#letter-coral
+{
+    display: block;
+    border: 2px solid;
+    width: 15%;
+    height: 50px;
+    overflow: auto;
+}
+#dashes{
+    text-align: center;
+    font-size: 50px;
+}
+#space{
+    float: left;
+    display: none;
+    z-index:99;
+    background-color: white;
+    position: relative;
+    width: 28%;
+    height: 20%;
+    margin: auto 36%;
+    border:black solid 2px;
+    text-align: center;
+    font-size: 30px;
+    line-height: 380%;
+    box-shadow: 5px 10px #888888;
+}

@@ -1,51 +1,16 @@
-var car = {
-    make: "Honda",
-    model: "Fit",
-    color: "Blue Raspberry",
-    mileage: 3000,
-    isWorking: true,
-
-    driveToWork: function() {
-
-        alert("Old Mileage: " + this.mileage);
-
-        this.mileage = this.mileage + 8;
-
-        alert("New mileage: " + this.mileage);
-    },
-
-    driveAroundWorld: function() {
-
-        alert("Old Mileage: " + this.mileage);
-
-        this.mileage = this.mileage + 24000;
-
-        alert("New Mileage: " + this.mileage);
-        alert("Car needs a tuneup!");
-
-        this.isWorking = false;
-    },
-
-    getTuneUp: function() {
-        alert("Car is ready to go!");
-        this.isWorking = true;
-    },
-
-    honk: function() {
-        alert("Honk! Honk!");
-    }
-};
-
 var words = ["Zoidberg","Fry","Bender","Leela"];
 var word = "";
 var score = 0;
 var wrongGuesses = 0;
 var rightGuess = 0;
 var letterArray = [];
+var pause = false;
 
 function pickWord()
 {
     letterArray = [];
+    pause = false;
+    document.getElementById("space").style.display = "none";
     if(words.length > 0){
     //console.log(words);
     word = words[Math.floor(Math.random()*(words.length-1))]
@@ -93,6 +58,7 @@ function reset()
     rightGuess = 0;
     setScore();
     setGuesses();
+    clearLetters();
 }
 
 function setScore()
@@ -103,6 +69,27 @@ function setScore()
 function setGuesses()
 {
     document.getElementById("guesses").innerHTML = "Remaining Guesses: " + wrongGuesses;
+}
+
+function clearLetters()
+{
+    document.getElementById("letters").innerHTML = "";
+}
+
+function updateLetters(keyPressed)
+{
+    if(letterArray.length < 1)
+    {
+        var lettersSoFar = document.getElementById("letters").innerHTML;
+        lettersSoFar = keyPressed;
+        document.getElementById("letters").innerHTML = lettersSoFar;
+    }
+    else
+    {
+        var lettersSoFar = document.getElementById("letters").innerHTML;
+        lettersSoFar = lettersSoFar + ", " + keyPressed;
+        document.getElementById("letters").innerHTML = lettersSoFar;
+    }
 }
 
 function showInstances(x)
@@ -132,33 +119,44 @@ window.onload = function()
 document.onkeyup = function(x)
 {
     var keyPressed = x.key.toLowerCase();
-    
-    if(letterArray.includes(keyPressed))
+    if(pause)
     {
-        //Do nothing?
-    }
-    else if(word.toLowerCase().includes(keyPressed))
-    {
-        showInstances(keyPressed);
-        letterArray.push(keyPressed);
+        pickWord();
+        setGuesses();
+        clearLetters();   
     }
     else
     {
-        wrongGuesses--;
-        setGuesses();
-        letterArray.push(keyPressed);
+        if(letterArray.includes(keyPressed)
+            || x.keyCode < 65
+                || x.keyCode > 90)
+        {
+            //Do nothing?
+        }
+        else if(word.toLowerCase().includes(keyPressed))
+        {
+            showInstances(keyPressed);
+            updateLetters(keyPressed);
+            letterArray.push(keyPressed);
+        }
+        else
+        {
+            wrongGuesses--;
+            setGuesses();
+            updateLetters(keyPressed);
+            letterArray.push(keyPressed);
+        }
+        if(wrongGuesses <= 0)
+        {
+            alert("GAME OVER!\n ANSWER WAS" + word);
+            reset();
+        }
+        else if(rightGuess >= word.length)
+        {
+            score++;
+            pause=true;
+            setScore();
+            document.getElementById("space").style.display = "block";
+        }
     }
-    if(wrongGuesses <= 0)
-    {
-        alert("GAME OVER!");
-        reset();
-    }
-    else if(rightGuess >= word.length)
-    {
-        score++;
-        setScore();
-        pickWord();
-        setGuesses();
-    }
-    
 }
