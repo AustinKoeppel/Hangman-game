@@ -59,7 +59,7 @@ header{
     text-align: center;
     font-size: 50px;
 }
-#space{
+#space-text{
     float: left;
     overflow: auto;
     display: none;
@@ -74,4 +74,10 @@ header{
     font-size: 30px;
     line-height: 50px;
     box-shadow: 5px 10px #888888;
+}
+
+.giff{
+    display: none;
+    width:80%;
+    margin: 0 10% 20%;
 }

@@ -11,8 +11,8 @@ function pickWord()
 {
     letterArray = [];
     pause = false;
-    document.getElementById("space").style.display = "none";
-    if(words.length > 0)
+    document.getElementById("space-text").style.display = "none";
+    if(words.length > 0)    
     {
         //console.log(words);
         word = words[Math.floor(Math.random()*(words.length-1))]
@@ -125,7 +125,9 @@ document.onkeyup = function(x)
     if(block)
     {
         document.getElementById("space").textContent = "GAME OVER YOU'VE WON";
-        document.getElementById("space").style.display = "block";
+        document.getElementById("gif").style.display = "none";
+        document.getElementById("gif2").style.display = "block";
+        document.getElementById("space-text").style.display = "block";
     }
     else{
             
@@ -133,6 +135,7 @@ document.onkeyup = function(x)
         {
             if(wrongGuesses <= 0 && words.length > 0)
             {
+                document.getElementById("gif").style.display = "none";
                 document.getElementById("space").textContent = "Press Any Key To Keep Playing!";
                 setScore();
                 reset();
@@ -168,9 +171,10 @@ document.onkeyup = function(x)
             }
             if(wrongGuesses <= 0)
             {
+                document.getElementById("gif").style.display = "block";
                 document.getElementById("space").textContent = "GAME OVER!\nANSWER WAS: " + word + "\nPress any key to keep playing";
                 document.getElementById("space").style.lineHeight = "50px";
-                document.getElementById("space").style.display = "block";
+                document.getElementById("space-text").style.display = "block";
                 words = ["Zoidberg","Fry","Bender","Leela"];
                 pause=true;
             }
@@ -179,7 +183,8 @@ document.onkeyup = function(x)
                 score++;
                 pause=true;
                 setScore();
-                document.getElementById("space").style.display = "block";
+                document.getElementById("gif").style.display = "none";
+                document.getElementById("space-text").style.display = "block";
             }
         }
     }
